@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/theme-provider";
 import Link from "next/link";
 
+
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -49,6 +50,8 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://janvichar.in"),
 };
 
+import TrackingWrapper from "@/components/TrackingWrapper";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -64,6 +67,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AuthProvider>
+            <TrackingWrapper />
             <LanguageProvider>
               <Navbar />
               <main className="flex-grow">{children}</main>

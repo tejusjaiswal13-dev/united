@@ -1,252 +1,193 @@
 "use client";
 
+import { useRef, useState, useEffect } from "react";
+import Navbar from "@/components/Navbar";
+import { ArrowRight, CheckCircle2, Globe, Scale, Shield, Users, Zap, FileText } from "lucide-react";
 import Link from "next/link";
-import { useAuth } from "@/context/AuthContext";
-import { motion } from "framer-motion";
-import {
-  ArrowRight,
-  ShieldCheck,
-  Users,
-  FileText,
-  Zap,
-  CheckCircle2,
-  ExternalLink
-} from "lucide-react";
-import { useLanguage } from "@/context/LanguageContext";
-import { cn } from "@/lib/utils";
+import { motion, useScroll, useTransform } from "framer-motion";
+import FloatingCard from "@/components/ui/FloatingCard";
+import SplineScene from "@/components/ui/SplineScene";
 
 export default function Home() {
-  const { user, login } = useAuth();
-  const { t } = useLanguage();
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1
-    }
-  };
+  const { scrollYProgress } = useScroll();
+  const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
 
   const features = [
     {
-      title: t("features.ai_drafting"),
-      description: t("features.ai_desc"),
-      icon: Zap,
-      color: "text-amber-500",
-      bg: "bg-amber-500/10"
+      title: "Crowd-Sourced Justice",
+      description: "Gather thousands of signatures to give weight to your cause before legal submission.",
+      icon: <Users className="w-6 h-6 text-cosmic-purple" />,
     },
     {
-      title: t("features.collaboration"),
-      description: t("features.collaboration_desc"),
-      icon: Users,
-      color: "text-indigo-500",
-      bg: "bg-indigo-500/10"
+      title: "Pre-Filing Review",
+      description: "Our automated legal engine checks your draft for relevance and formatting.",
+      icon: <Scale className="w-6 h-6 text-cyan-400" />,
     },
     {
-      title: t("features.tracking"),
-      description: t("features.tracking_desc"),
-      icon: CheckCircle2,
-      color: "text-green-500",
-      bg: "bg-green-500/10"
+      title: "Secure & transparent",
+      description: "End-to-end encryption ensures your data and identity remain protected.",
+      icon: <Shield className="w-6 h-6 text-emerald-400" />,
     },
     {
-      title: t("features.exports"),
-      description: t("features.exports_desc"),
-      icon: FileText,
-      color: "text-primary",
-      bg: "bg-primary/10"
-    }
+      title: "Legal Formatting",
+      description: "Automatically generate court-ready PDFs from your drafted content.",
+      icon: <FileText className="w-6 h-6 text-amber-400" />,
+    },
   ];
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden selection:bg-primary/30">
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-br from-[#0f172a] via-[#1e3a8a] to-[#0f172a] py-24 lg:py-32 text-white">
-        {/* Animated Background Mesh */}
-        <div className="absolute inset-0 opacity-20 pointer-events-none">
-          <div className="absolute top-0 -left-1/4 w-[1000px] h-[1000px] bg-primary/30 rounded-full blur-[120px] animate-pulse" />
-          <div className="absolute bottom-0 -right-1/4 w-[1000px] h-[1000px] bg-secondary/20 rounded-full blur-[120px] animate-pulse delay-700" />
+      <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-cosmic-purple/20 rounded-full blur-3xl animate-pulse-glow" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse-glow delay-1000" />
         </div>
 
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container mx-auto px-4 relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+          {/* Text Content */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="max-w-4xl mx-auto text-center"
+            className="space-y-8"
           >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-xs md:text-sm font-semibold mb-8 text-indigo-200"
-            >
-              <span className="flex h-2 w-2 rounded-full bg-secondary animate-pulse" />
-              {t("hero.empower_badge")}
-            </motion.div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-xs font-bold uppercase tracking-wider text-primary shadow-glow">
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+              v2.0 Beta Live
+            </div>
 
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight mb-8 leading-[1.2] bg-clip-text text-transparent bg-gradient-to-b from-white to-white/70 py-2">
-              {t("hero.title")}
-              <span className="block text-secondary mt-4 drop-shadow-sm">{t("hero.subtitle")}</span>
+            <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-tight">
+              Justice <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cosmic-purple to-cyan-400 animate-gradient-x">
+                Defies Gravity
+              </span>
             </h1>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              {user ? (
-                <Link
-                  href="/create-pil"
-                  className="group w-full sm:w-auto flex items-center justify-center gap-3 bg-secondary hover:bg-secondary/90 text-white px-10 py-5 rounded-2xl font-bold text-xl shadow-2xl shadow-secondary/30 transition-all hover:-translate-y-1 hover:shadow-secondary/40 active:scale-95"
+            <p className="text-xl text-muted-foreground/80 font-medium leading-relaxed max-w-lg">
+              Elevate local issues to national attention. Draft, validate, and gather support for Public Interest Litigations with the power of technology and community.
+            </p>
+
+            <div className="flex flex-wrap gap-4 pt-4">
+              <Link href="/create-pil">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 rounded-xl font-bold text-lg shadow-xl shadow-primary/20 flex items-center gap-2 transition-all"
                 >
-                  {t("hero.start_button")}
-                  <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
-                </Link>
-              ) : (
-                <button
-                  onClick={login}
-                  className="group w-full sm:w-auto flex items-center justify-center gap-3 bg-secondary hover:bg-secondary/90 text-white px-10 py-5 rounded-2xl font-bold text-xl shadow-2xl shadow-secondary/30 transition-all hover:-translate-y-1 hover:shadow-secondary/40 active:scale-95"
+                  Draft a PIL <ArrowRight className="w-5 h-5" />
+                </motion.button>
+              </Link>
+              <Link href="/learn">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-secondary/10 hover:bg-secondary/20 text-secondary border border-secondary/20 px-8 py-4 rounded-xl font-bold text-lg backdrop-blur-sm transition-all"
                 >
-                  {t("hero.start_button")}
-                  <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
-                </button>
-              )}
-              <Link
-                href="/tracker"
-                className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 backdrop-blur-xl border border-white/10 text-white px-10 py-5 rounded-2xl font-bold text-xl transition-all hover:bg-white/15"
-              >
-                {t("nav.tracker")}
+                  How it Works
+                </motion.button>
               </Link>
             </div>
 
-            <div className="mt-20 flex flex-wrap justify-center items-center gap-10 opacity-60">
-              <div className="flex items-center gap-3">
-                <ShieldCheck size={22} />
-                <span className="text-sm font-bold tracking-wider uppercase">Firebase Secure</span>
+            <div className="flex items-center gap-4 text-sm font-medium text-muted-foreground pt-4">
+              <div className="flex -space-x-3">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className={`w-8 h-8 rounded-full border-2 border-background bg-zinc-800 flex items-center justify-center text-[10px] text-white z-${10 - i}`}>
+                    {String.fromCharCode(64 + i)}
+                  </div>
+                ))}
               </div>
-              <div className="h-4 w-px bg-white/20 hidden md:block" />
-              <div className="flex items-center gap-3 text-indigo-200">
-                <Zap size={22} className="text-amber-400" />
-                <span className="text-sm font-bold tracking-wider uppercase">Google Gemini AI</span>
-              </div>
-              <div className="h-4 w-px bg-white/20 hidden md:block" />
-              <div className="flex items-center gap-3">
-                <Users size={22} />
-                <span className="text-sm font-bold tracking-wider uppercase">Community Powered</span>
-              </div>
+              <span>Joined by 10,000+ citizens today</span>
             </div>
           </motion.div>
-        </div>
-      </section>
 
-      {/* Features Grid */}
-      <section className="py-24 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">{t("features.title")}</h2>
-            <p className="text-muted-foreground text-lg italic">
-              &quot;Ensuring justice is not a privilege, but a right accessible to every Indian.&quot;
-            </p>
+          {/* 3D Spline Scene */}
+          <div className="relative h-[500px] w-full lg:h-[700px] hidden md:block">
+            {/* 
+                Abstract Architectural Composition
+                Represents structure, stability, and "building a case".
+            */}
+            <SplineScene
+              scene="https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode"
+              className="w-full h-full"
+            />
           </div>
-
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
-          >
-            {features.map((feature, idx) => (
-              <motion.div
-                key={idx}
-                variants={itemVariants}
-                className="p-8 rounded-2xl border bg-card hover:shadow-xl hover:border-primary/20 transition-all group"
-              >
-                <div className={cn("w-14 h-14 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform", feature.bg)}>
-                  <feature.icon className={cn("w-7 h-7", feature.color)} />
-                </div>
-                <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {feature.description}
-                </p>
-              </motion.div>
-            ))}
-          </motion.div>
         </div>
       </section>
 
-      {/* Recent Activity / CTA Section */}
-      <section className="py-24 bg-muted/30 border-y">
+      {/* Features Grid with Floating Cards */}
+      <section className="py-24 bg-cosmic-900/50 backdrop-blur-sm relative z-20">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
-            <div className="max-w-xl">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">{t("home_recent.title")}</h2>
-              <p className="text-muted-foreground text-lg mb-8">
-                {t("home_recent.subtitle")}
-              </p>
-              <div className="space-y-4 mb-8">
-                {[
-                  t("home_recent.sample_1"),
-                  t("home_recent.sample_2"),
-                  t("home_recent.sample_3")
-                ].map((item, i) => (
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center max-w-3xl mx-auto mb-16"
+          >
+            <h2 className="text-3xl md:text-5xl font-black mb-6">Power to the People</h2>
+            <p className="text-lg text-muted-foreground">Advanced tools usually reserved for top law firms, now in your hands.</p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {features.map((feature, idx) => (
+              <FloatingCard key={idx} className="h-full">
+                <div className="h-full p-8 rounded-2xl border border-white/5 bg-white/5 backdrop-blur-md hover:bg-white/10 transition-all flex flex-col gap-4 group">
+                  <div className="w-12 h-12 rounded-xl bg-background/50 flex items-center justify-center border border-white/10 group-hover:scale-110 transition-transform">
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-xl font-bold">{feature.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {feature.description}
+                  </p>
+                </div>
+              </FloatingCard>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Trust Section */}
+      <section className="py-24 relative overflow-hidden">
+        <div className="container mx-auto px-4 grid lg:grid-cols-2 gap-16 items-center">
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary to-cosmic-purple rounded-3xl opacity-20 blur-2xl transform -rotate-3" />
+            <div className="relative bg-zinc-900 border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center">
+                  <Scale className="w-8 h-8 text-primary" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold">Judicial Trust</h3>
+                  <p className="text-sm text-muted-foreground">Aligned with e-Courts Standards</p>
+                </div>
+              </div>
+              <div className="space-y-4">
+                {["Constitutional Reference Check", "Jurisdiction Compatibility", "Pre-submission formatting"].map((item, i) => (
                   <div key={i} className="flex items-center gap-3">
-                    <div className="bg-primary/10 p-1 rounded-full text-primary">
-                      <CheckCircle2 size={16} />
-                    </div>
+                    <CheckCircle2 className="w-5 h-5 text-green-500" />
                     <span className="font-medium">{item}</span>
                   </div>
                 ))}
               </div>
-              <Link
-                href="/tracker"
-                className="inline-flex items-center gap-2 text-primary font-bold hover:underline"
-              >
-                {t("home_recent.explore_all")}
-                <ExternalLink size={18} />
-              </Link>
             </div>
-
-            <div className="w-full lg:w-1/2 p-1 bg-gradient-to-tr from-primary to-secondary rounded-2xl">
-              <div className="bg-card rounded-xl p-8 shadow-2xl overflow-hidden relative">
-                <div className="flex items-center justify-between mb-8">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-red-500" />
-                    <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                    <div className="w-3 h-3 rounded-full bg-green-500" />
-                  </div>
-                  <span className="text-xs font-mono text-muted-foreground tracking-tighter uppercase">PIL_DRAFT_V2.026</span>
-                </div>
-                <div className="space-y-4">
-                  <div className="h-4 bg-muted rounded w-3/4 animate-pulse" />
-                  <div className="h-4 bg-muted rounded w-full animate-pulse" />
-                  <div className="h-4 bg-muted rounded w-5/6 animate-pulse" />
-                  <div className="pt-4 flex gap-4">
-                    <div className="h-10 bg-primary/20 rounded-lg w-1/3" />
-                    <div className="h-10 bg-secondary/20 rounded-lg w-1/4" />
-                  </div>
-                </div>
-
-                {/* Floating Badge */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rotate-12 bg-white dark:bg-zinc-800 p-4 rounded-xl shadow-2xl border flex items-center gap-4 animate-bounce">
-                  <Zap className="text-amber-500" size={32} />
-                  <div>
-                    <div className="text-xs text-muted-foreground uppercase font-bold">{t("home_recent.ai_suggestion")}</div>
-                    <div className="font-bold">{t("home_recent.optimized")}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          </div>
+          <div>
+            <h2 className="text-4xl md:text-6xl font-black mb-6 leading-tight">
+              Make Your Case <br />
+              <span className="text-primary">Undeniable</span>
+            </h2>
+            <p className="text-lg text-muted-foreground mb-8">
+              A PIL with 10,000 signatures and system-verified citations is harder to ignore. We provide the infrastructure to turn local grievances into legal movements.
+            </p>
+            <Link href="/unified">
+              <button className="px-8 py-4 rounded-xl font-bold border-b-4 border-primary bg-primary/10 hover:bg-primary/20 text-primary transition-all">
+                Explore Active Campaigns
+              </button>
+            </Link>
           </div>
         </div>
       </section>
+
     </div>
   );
 }

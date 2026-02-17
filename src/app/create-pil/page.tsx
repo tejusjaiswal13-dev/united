@@ -13,7 +13,7 @@ import {
     Zap, Send, AlertCircle, ChevronLeft, Sparkles, Info, CheckCircle2,
     FileText, Link as LinkIcon, HelpCircle, ArrowRight, ChevronRight,
     Search, Upload, X, File, Image as ImageIcon, MapPin, Filter, Clock,
-    Users, Paperclip, UploadCloud, ShieldAlert, Flame, MessageSquare
+    Users, Paperclip, UploadCloud, ShieldAlert, Flame, MessageSquare, Scale
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
@@ -61,44 +61,6 @@ export default function CreatePIL() {
     const [step, setStep] = useState(1);
     const [duplicateScore, setDuplicateScore] = useState(0);
     const [draftRestored, setDraftRestored] = useState(false);
-
-    // Restore draft from localStorage on mount
-    useEffect(() => {
-        try {
-            const saved = localStorage.getItem("pil_draft");
-            if (saved) {
-                const draft = JSON.parse(saved);
-                if (draft.title) setTitle(draft.title);
-                if (draft.category) setCategory(draft.category);
-                if (draft.stateLocation) setStateLocation(draft.stateLocation);
-                if (draft.city) setCity(draft.city);
-
-                if (draft.description) setDescription(draft.description);
-                if (draft.sinceWhen) setSinceWhen(draft.sinceWhen);
-                if (draft.affectedGroup) setAffectedGroup(draft.affectedGroup);
-                if (draft.evidenceDescription) setEvidenceDescription(draft.evidenceDescription);
-                if (draft.publicHealth) setPublicHealth(draft.publicHealth);
-                if (draft.urgency) setUrgency(draft.urgency);
-                if (draft.complaintFiled) setComplaintFiled(draft.complaintFiled);
-
-                if (draft.step) setStep(draft.step);
-                setDraftRestored(true);
-                setTimeout(() => setDraftRestored(false), 4000);
-            }
-        } catch { }
-    }, []);
-
-    // Auto-save draft to localStorage
-    useEffect(() => {
-        const draftData = {
-            title, category, stateLocation, city,
-            description, sinceWhen, affectedGroup, evidenceDescription,
-            publicHealth, urgency, complaintFiled, step
-        };
-        if (title || description || city) {
-            localStorage.setItem("pil_draft", JSON.stringify(draftData));
-        }
-    }, [title, category, stateLocation, city, description, sinceWhen, affectedGroup, evidenceDescription, publicHealth, urgency, complaintFiled, step]);
 
     useEffect(() => {
         if (title.length < 5 && description.length < 10) {
@@ -232,9 +194,9 @@ export default function CreatePIL() {
         } catch (error: unknown) {
             console.error("Validation failed", error);
             if (error instanceof Error && error.message?.includes("404")) {
-                setValidation("AI validation is currently undergoing maintenance. Please proceed with your draft.");
+                setValidation("System review is currently undergoing maintenance. Please proceed with your draft.");
             } else {
-                setValidation("Could not validate at this time. Our AI assistant is currently over-taxed. Please proceed manually.");
+                setValidation("Could not complete review at this time. The system is currently busy. Please proceed manually.");
             }
         } finally {
             setValidating(false);
@@ -350,13 +312,6 @@ export default function CreatePIL() {
 
     return (
         <div className="min-h-screen bg-muted/30">
-            {/* Draft Restored Toast */}
-            {draftRestored && (
-                <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-blue-600 text-white px-6 py-3 rounded-xl shadow-2xl flex items-center gap-2 text-sm font-bold animate-in slide-in-from-top-4">
-                    <CheckCircle2 size={16} />
-                    Draft restored from your last session
-                </div>
-            )}
             {/* Header */}
             <div className="bg-background border-b border-border py-4 sticky top-[65px] z-30">
                 <div className="container mx-auto px-4 flex items-center justify-between">
@@ -372,8 +327,8 @@ export default function CreatePIL() {
                             disabled={validating || !title || !description}
                             className="bg-primary/10 text-primary px-4 py-2 rounded-lg font-bold text-sm flex items-center gap-2 hover:bg-primary/20 disabled:opacity-50 transition-all"
                         >
-                            {validating ? <Sparkles size={16} className="animate-spin" /> : <Sparkles size={16} />}
-                            <span className="hidden sm:inline">{t("create_pil.ai_validate")}</span>
+                            {validating ? <Scale size={16} className="animate-spin" /> : <Scale size={16} />}
+                            <span className="hidden sm:inline">Check Legal Feasibility</span>
                         </button>
                     </div>
                 </div>
@@ -501,15 +456,15 @@ export default function CreatePIL() {
                                                 >
                                                     <div className="flex items-start gap-4">
                                                         <div className="p-3 bg-orange-100 dark:bg-orange-900/30 rounded-xl shrink-0 text-orange-600 dark:text-orange-400">
-                                                            <Sparkles size={24} />
+                                                            <Info size={24} />
                                                         </div>
                                                         <div className="flex-1 space-y-4">
                                                             <div>
                                                                 <h4 className="text-orange-900 dark:text-orange-100 font-bold text-lg mb-1">
-                                                                    Similar PIL Detected
+                                                                    Similar Litigation Record
                                                                 </h4>
                                                                 <p className="text-sm text-orange-700/80 dark:text-orange-300/80 leading-relaxed">
-                                                                    Our AI has identified an existing petition that closely matches yours. Joining forces might lead to a faster resolution.
+                                                                    The system has identified an existing petition that closely matches yours. Consolidating these records may strengthen the legal standing.
                                                                 </p>
                                                             </div>
 
@@ -739,7 +694,7 @@ export default function CreatePIL() {
                                                     Step 3: Review & Submit
                                                 </h3>
                                                 <p className="text-sm text-muted-foreground">
-                                                    Review your details before filing. Our AI has checked for duplicates.
+                                                    Review your details before filing. The system has checked for existing records.
                                                 </p>
                                             </div>
 
@@ -777,13 +732,13 @@ export default function CreatePIL() {
                                                 </div>
                                             </div>
 
-                                            {/* AI Feedback Section */}
+                                            {/* Pre-Filing Review Section */}
                                             {validation && (
-                                                <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-900/30 p-5 rounded-xl">
-                                                    <h4 className="font-bold text-blue-800 dark:text-blue-300 flex items-center gap-2 mb-2">
-                                                        <Sparkles size={16} /> AI Legal Assistant Feedback
+                                                <div className="bg-slate-50 dark:bg-slate-900/20 border border-slate-200 dark:border-slate-800 p-5 rounded-xl">
+                                                    <h4 className="font-bold text-slate-800 dark:text-slate-300 flex items-center gap-2 mb-2">
+                                                        <Scale size={16} /> Pre-Filing Review
                                                     </h4>
-                                                    <div className="text-sm text-blue-800/80 dark:text-blue-300/80 prose prose-sm max-w-none">
+                                                    <div className="text-sm text-slate-700/80 dark:text-slate-400/80 prose prose-sm max-w-none font-medium">
                                                         <div dangerouslySetInnerHTML={{ __html: validation.replace(/\n/g, '<br/>') }} />
                                                     </div>
                                                 </div>
