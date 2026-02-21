@@ -6,7 +6,6 @@ import { ArrowRight, CheckCircle2, Globe, Scale, Shield, Users, Zap, FileText } 
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import FloatingCard from "@/components/ui/FloatingCard";
-import SplineScene from "@/components/ui/SplineScene";
 
 export default function Home() {
   const { scrollYProgress } = useScroll();
