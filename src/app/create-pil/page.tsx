@@ -351,14 +351,19 @@ export default function CreatePIL() {
                                         >
                                             <div className="space-y-4">
                                                 <div>
-                                                    <label className="text-sm font-bold flex items-center gap-2 mb-2">
-                                                        <FileText size={16} className="text-primary" />
-                                                        {t("create_pil.form_title")}
-                                                    </label>
+                                                    <div className="flex justify-between items-center mb-2">
+                                                        <label className="text-sm font-bold flex items-center gap-2">
+                                                            <FileText size={16} className="text-primary" />
+                                                            {t("create_pil.form_title")}
+                                                        </label>
+                                                        <span className={cn("text-xs font-medium", title.length > 90 ? "text-red-500" : "text-muted-foreground")}>
+                                                            {title.length}/100
+                                                        </span>
+                                                    </div>
                                                     <input
                                                         type="text"
                                                         value={title}
-                                                        onChange={(e) => setTitle(e.target.value)}
+                                                        onChange={(e) => setTitle(e.target.value.slice(0, 100))}
                                                         placeholder={t("create_pil.placeholder_title")}
                                                         className="w-full text-lg font-semibold bg-muted/50 border border-border rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
                                                         required
@@ -506,13 +511,18 @@ export default function CreatePIL() {
                                             )}
 
                                             <div className="space-y-2">
-                                                <label className="text-sm font-bold flex items-center gap-2">
-                                                    <FileText size={16} className="text-primary" />
-                                                    What is the problem?
-                                                </label>
+                                                <div className="flex justify-between items-center mb-2">
+                                                    <label className="text-sm font-bold flex items-center gap-2">
+                                                        <FileText size={16} className="text-primary" />
+                                                        What is the problem?
+                                                    </label>
+                                                    <span className={cn("text-xs font-medium", description.length > 4500 ? "text-red-500" : "text-muted-foreground")}>
+                                                        {description.length}/5000
+                                                    </span>
+                                                </div>
                                                 <textarea
                                                     value={description}
-                                                    onChange={(e) => setDescription(e.target.value)}
+                                                    onChange={(e) => setDescription(e.target.value.slice(0, 5000))}
                                                     placeholder="Describe the issue in detail..."
                                                     rows={6}
                                                     className="w-full bg-muted/50 border border-border rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all resize-none"

@@ -101,16 +101,65 @@ export default function Home() {
             </div>
           </motion.div>
 
-          {/* 3D Spline Scene */}
-          <div className="relative h-[500px] w-full lg:h-[700px] hidden md:block">
-            {/* 
-                Abstract Architectural Composition
-                Represents structure, stability, and "building a case".
-            */}
-            <SplineScene
-              scene="https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode"
-              className="w-full h-full"
-            />
+          {/* Premium CSS-based Justice Orb Visual */}
+          <div className="relative h-[500px] w-full lg:h-[700px] hidden md:flex items-center justify-center">
+            <div className="relative w-full h-full flex items-center justify-center">
+              {/* Outer Glows */}
+              <div className="absolute w-[400px] h-[400px] bg-primary/20 rounded-full blur-[100px] animate-pulse" />
+              <div className="absolute w-[300px] h-[300px] bg-cosmic-purple/20 rounded-full blur-[80px] animate-pulse delay-700" />
+
+              {/* The Justice Orb */}
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 1.5, ease: "easeOut" }}
+                className="relative w-64 h-64 rounded-full bg-gradient-to-br from-primary via-cosmic-purple to-cyan-500 p-[2px] shadow-2xl shadow-primary/20 group"
+              >
+                <div className="w-full h-full rounded-full bg-zinc-950 flex items-center justify-center relative overflow-hidden backdrop-blur-3xl">
+                  {/* Internal Orbits */}
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent opacity-50" />
+
+                  {/* Floating Icons representing components of justice */}
+                  <motion.div
+                    animate={{
+                      y: [0, -10, 0],
+                      rotate: [0, 5, 0]
+                    }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    className="z-10"
+                  >
+                    <Scale className="w-24 h-24 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" />
+                  </motion.div>
+
+                  {/* Geometric Accents */}
+                  <div className="absolute border border-white/5 w-[120%] h-[120%] rounded-full animate-[spin_20s_linear_infinite]" />
+                  <div className="absolute border border-white/5 w-[140%] h-[140%] rounded-full animate-[spin_30s_linear_infinite_reverse]" />
+                </div>
+              </motion.div>
+
+              {/* Stats Cards floating around */}
+              <motion.div
+                animate={{ x: [0, 10, 0], y: [0, -5, 0] }}
+                transition={{ duration: 5, repeat: Infinity }}
+                className="absolute top-1/4 right-0 bg-zinc-900/80 backdrop-blur-xl border border-white/10 p-4 rounded-2xl shadow-xl z-20"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-sm font-bold text-white">4.2k PILs Filed</span>
+                </div>
+              </motion.div>
+
+              <motion.div
+                animate={{ x: [0, -10, 0], y: [0, 5, 0] }}
+                transition={{ duration: 6, repeat: Infinity }}
+                className="absolute bottom-1/4 left-0 bg-zinc-900/80 backdrop-blur-xl border border-white/10 p-4 rounded-2xl shadow-xl z-20"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                  <span className="text-sm font-bold text-white">Digital Courts Ready</span>
+                </div>
+              </motion.div>
+            </div>
           </div>
         </div>
       </section>

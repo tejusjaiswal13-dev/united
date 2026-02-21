@@ -10,10 +10,6 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
-    "@react-three/drei": "^10.7.7",
-    "@react-three/fiber": "^9.5.0",
-    "@splinetool/react-spline": "^4.1.0",
-    "@splinetool/runtime": "^1.12.57",
     "@types/dompurify": "^3.0.5",
     "@types/jsdom": "^27.0.0",
     "clsx": "^2.1.1",
@@ -29,8 +25,7 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "tailwind-merge": "^3.4.1",
-    "tailwindcss-animate": "^1.0.7",
-    "three": "^0.182.0"
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.18",

@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import SplineScene from "@/components/ui/SplineScene";
+import { Shield } from "lucide-react";
 
 export default function PrivacyPolicy() {
     return (
@@ -38,14 +38,43 @@ export default function PrivacyPolicy() {
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 1 }}
-                        className="h-[400px] lg:h-[500px] w-full relative"
+                        className="h-[400px] lg:h-[500px] w-full relative flex items-center justify-center"
                     >
-                        {/* 3D Scene - Abstract Sphere representing 'Digital Security' */}
-                        <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent rounded-full blur-3xl animate-pulse-glow" />
-                        <SplineScene
-                            scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-                            className="w-full h-full"
-                        />
+                        {/* CSS-based Security Visual */}
+                        <div className="relative w-full h-full flex items-center justify-center">
+                            <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent rounded-full blur-3xl animate-pulse-glow" />
+
+                            <div className="relative w-72 h-72">
+                                {/* Shield and Lock Visual */}
+                                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/10 to-cosmic-purple/10 backdrop-blur-3xl border border-white/5 flex items-center justify-center">
+                                    <div className="relative">
+                                        <Shield className="w-24 h-24 text-primary opacity-50 absolute -inset-4 blur-sm" />
+                                        <Shield className="w-24 h-24 text-primary relative z-10" />
+                                    </div>
+                                </div>
+
+                                {/* Orbiting Security Rings */}
+                                {/* Replaced static CSS animation with Framer Motion for the rings */}
+                                <motion.div
+                                    animate={{ rotate: 360 }}
+                                    transition={{
+                                        duration: 10, // Base duration
+                                        repeat: Infinity,
+                                        ease: "linear"
+                                    }}
+                                    className="absolute inset-0 border border-primary/20 rounded-full"
+                                />
+                                <motion.div
+                                    animate={{ rotate: -360 }} // Reverse spin
+                                    transition={{
+                                        duration: 15, // Different duration
+                                        repeat: Infinity,
+                                        ease: "linear"
+                                    }}
+                                    className="absolute inset-10 border border-cosmic-purple/20 rounded-full"
+                                />
+                            </div>
+                        </div>
                     </motion.div>
                 </div>
             </section>

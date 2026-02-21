@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import SplineScene from "@/components/ui/SplineScene";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { Users, Shield, Globe, Award } from "lucide-react";
 
 export default function AboutUs() {
@@ -35,14 +36,42 @@ export default function AboutUs() {
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 1 }}
-                        className="h-[400px] lg:h-[500px] w-full relative"
+                        className="h-[400px] lg:h-[500px] w-full relative flex items-center justify-center"
                     >
-                        {/* 3D Scene - Abstract Network representing 'Crowd Power' */}
-                        <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent rounded-full blur-3xl animate-pulse-glow" />
-                        <SplineScene
-                            scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-                            className="w-full h-full"
-                        />
+                        {/* CSS-based Crowd Network Visual */}
+                        <div className="relative w-full h-full flex items-center justify-center">
+                            <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent rounded-full blur-3xl animate-pulse-glow" />
+
+                            <div className="relative w-72 h-72">
+                                {/* Orbiting Dots representing citizens */}
+                                {[...Array(12)].map((_, i) => (
+                                    <motion.div
+                                        key={i}
+                                        animate={{
+                                            rotate: 360,
+                                        }}
+                                        transition={{
+                                            duration: 10 + i * 2,
+                                            repeat: Infinity,
+                                            ease: "linear"
+                                        }}
+                                        className="absolute inset-0"
+                                        style={{ transform: `rotate(${i * 30}deg)` }}
+                                    >
+                                        <div className="w-3 h-3 bg-primary rounded-full absolute -top-1.5 left-1/2 -ml-1.5 shadow-[0_0_10px_rgba(var(--primary),0.5)]" />
+                                    </motion.div>
+                                ))}
+
+                                {/* Central Core */}
+                                <div className="absolute inset-8 rounded-full bg-gradient-to-br from-primary/20 to-cosmic-purple/20 backdrop-blur-3xl border border-white/10 flex items-center justify-center shadow-inner">
+                                    <Users className="w-16 h-16 text-primary drop-shadow-[0_0_10px_rgba(var(--primary),0.5)]" />
+                                </div>
+
+                                {/* Connecting Lines (Simulated with rotating borders) */}
+                                <div className="absolute inset-0 border-2 border-dashed border-white/5 rounded-full animate-[spin_60s_linear_infinite]" />
+                                <div className="absolute inset-16 border-2 border-dotted border-white/10 rounded-full animate-[spin_40s_linear_infinite_reverse]" />
+                            </div>
+                        </div>
                     </motion.div>
                 </div>
             </section>
