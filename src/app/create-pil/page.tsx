@@ -4,15 +4,15 @@ import { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useLanguage } from "@/context/LanguageContext";
 import { db, storage } from "@/lib/firebase";
-import { collection, addDoc, serverTimestamp, query, where, getDocs, limit, updateDoc, doc } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp, query, getDocs, limit, updateDoc, doc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useRouter } from "next/navigation";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { generateEmbedding, cosineSimilarity } from "@/lib/gemini";
 import {
     Zap, Send, AlertCircle, ChevronLeft, Sparkles, Info, CheckCircle2,
-    FileText, Link as LinkIcon, HelpCircle, ArrowRight, ChevronRight,
-    Search, Upload, X, File, Image as ImageIcon, MapPin, Filter, Clock,
+    FileText, HelpCircle, ArrowRight,
+    X, File, MapPin, Filter, Clock,
     Users, Paperclip, UploadCloud, ShieldAlert, Flame, MessageSquare, Scale
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -54,13 +54,13 @@ export default function CreatePIL() {
     const [validation, setValidation] = useState("");
     const [validating, setValidating] = useState(false);
     const [duplicates, setDuplicates] = useState<PIL[]>([]);
-    const [searchingDuplicates, setSearchingDuplicates] = useState(false);
+    const [, setSearchingDuplicates] = useState(false);
     const [files, setFiles] = useState<File[]>([]);
-    const [uploadProgress, setUploadProgress] = useState<{ [key: string]: number }>({});
+    const [, setUploadProgress] = useState<{ [key: string]: number }>({});
     const [uploading, setUploading] = useState(false);
     const [step, setStep] = useState(1);
     const [duplicateScore, setDuplicateScore] = useState(0);
-    const [draftRestored, setDraftRestored] = useState(false);
+
 
     useEffect(() => {
         if (title.length < 5 && description.length < 10) {
@@ -89,7 +89,9 @@ export default function CreatePIL() {
                 console.log("Fetch complete. PILs found:", snapshot.size);
 
                 // Split PILs into those with/without embeddings
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const withEmbedding: { id: string; data: any; embedding: number[] }[] = [];
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const needsEmbedding: { id: string; data: any }[] = [];
 
                 snapshot.docs.forEach(docSnap => {
@@ -124,8 +126,10 @@ export default function CreatePIL() {
                 const allPils = [
                     ...withEmbedding,
                     ...embeddingResults
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         .filter((r): r is PromiseFulfilledResult<{ id: string; data: any; embedding: number[] } | null> => r.status === "fulfilled")
                         .map(r => r.value)
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         .filter((r): r is { id: string; data: any; embedding: number[] } => r !== null)
                 ];
 

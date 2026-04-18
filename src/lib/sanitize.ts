@@ -4,6 +4,7 @@ import { JSDOM } from 'jsdom';
 // Create a purifier instance that works in both Node.js (SSR) and Browser
 const purifier = typeof window !== 'undefined'
     ? DOMPurify
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     : DOMPurify(new JSDOM('').window as any);
 
 export const sanitizeInput = (content: string): string => {

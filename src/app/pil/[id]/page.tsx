@@ -125,7 +125,7 @@ export default function PILDetail() {
         try {
             console.log("Requesting summary from gemini-2.0-flash...");
             const genAI = new GoogleGenerativeAI(apiKey);
-            let model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+            const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
             const prompt = `Specifically for this legal case titled "${pil.title}", 
             provide a 3-bullet point "Citizen's Brief" summary.
@@ -179,6 +179,7 @@ export default function PILDetail() {
             const newSupporters = pil.supporters + 1;
 
             // Check for consensus threshold
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const updates: any = {
                 supporters: increment(1),
                 upvotedBy: arrayUnion(user.uid)

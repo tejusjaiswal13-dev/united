@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+
+
 import { Users, Shield, Globe, Award } from "lucide-react";
 
 export default function AboutUs() {

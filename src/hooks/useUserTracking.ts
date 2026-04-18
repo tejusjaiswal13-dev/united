@@ -11,6 +11,7 @@ interface UserTrackingData {
     screenResolution: string;
     platform: string;
     language: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     lastActive: any; // ServerTimestamp
     email?: string;
     displayName?: string;

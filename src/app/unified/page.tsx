@@ -25,6 +25,7 @@ interface Thread {
     pils: PIL[];
     summary: string;
     issueTitle: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     createdAt?: any;
 }
 

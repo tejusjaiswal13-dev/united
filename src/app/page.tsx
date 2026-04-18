@@ -1,15 +1,13 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import Navbar from "@/components/Navbar";
-import { ArrowRight, CheckCircle2, Globe, Scale, Shield, Users, Zap, FileText } from "lucide-react";
+
+import { ArrowRight, CheckCircle2, Scale, Shield, Users, FileText } from "lucide-react";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import FloatingCard from "@/components/ui/FloatingCard";
 
 export default function Home() {
   const { scrollYProgress } = useScroll();
-  const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
 
   const features = [
     {

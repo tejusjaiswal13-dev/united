@@ -50,9 +50,9 @@ export default function MigratePage() {
 
             setStats({ seen: seenCount, updated: updatedCount, skipped: seenCount - updatedCount });
             setLogs(prev => [...prev, "✅ Migration complete!"]);
-        } catch (e: any) {
+        } catch (e: unknown) {
             console.error(e);
-            setLogs(prev => [...prev, `❌ Error: ${e.message}`]);
+            setLogs(prev => [...prev, `❌ Error: ${e instanceof Error ? e.message : String(e)}`]);
         } finally {
             setLoading(false);
         }
@@ -65,8 +65,8 @@ export default function MigratePage() {
             <div className="bg-amber-50 border border-amber-200 p-4 rounded-xl mb-6">
                 <h2 className="font-bold text-amber-800 mb-2">Threshold Update: 200 Upvotes</h2>
                 <ul className="text-sm list-disc pl-5 space-y-1 text-amber-900">
-                    <li>Reverts PILs with &lt; 200 votes to "Awaiting Consensus"</li>
-                    <li>Promotes PILs with &ge; 200 votes to "Ready for Review"</li>
+                    <li>Reverts PILs with &lt; 200 votes to &quot;Awaiting Consensus&quot;</li>
+                    <li>Promotes PILs with &ge; 200 votes to &quot;Ready for Review&quot;</li>
                 </ul>
             </div>
 

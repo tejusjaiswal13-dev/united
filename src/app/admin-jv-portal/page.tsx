@@ -5,7 +5,7 @@ import { db } from "@/lib/firebase";
 import { collection, query, orderBy, onSnapshot, deleteDoc, doc, updateDoc, Timestamp } from "firebase/firestore";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
-import { Trash2, Edit, Clock, AlertTriangle, Users, FileText, Monitor, Smartphone, Globe } from "lucide-react";
+import { Trash2, Edit, Clock, AlertTriangle, Users, Monitor, Smartphone, Globe } from "lucide-react";
 
 interface PIL {
     id: string;

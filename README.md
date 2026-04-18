@@ -1,8 +1,8 @@
-# stackoverflowedYukti (JanVichar) - Indian PIL Filing Portal
+ (JanVichar) - Indian PIL Filing Portal
 
 JanVichar is a high-performance, AI-powered platform designed for Indian citizens to collaboratively draft, track, and manage Public Interest Litigations (PILs). It bridges the gap between civic grievances and judicial recourse through community engagement and advanced technology.
 
-## 🚀 Key Improvements (Feb 2026)
+## 🚀 Key Improvements 
 
 - **Performance Optimization:** Replaced heavy 3D Spline/Three.js scenes with ultra-lightweight CSS-based animations, reducing bundle size and improving TTI (Time to Interactive).
 - **User Experience:** Added character counters and validation feedback loops in the PIL creation process.
@@ -59,7 +59,7 @@ JanVichar is a high-performance, AI-powered platform designed for Indian citizen
    NEXT_PUBLIC_FIREBASE_PROJECT_ID=...
    NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=...
    NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=...
-   NEXT_PUBLIC_FIREBASE_APP_ID=...
+   NEXT_PUBLIC_FIREBASE_APP_ID=... 
    NEXT_PUBLIC_GEMINI_API_KEY=...
 >>>>>>> 4f891b4 (feat: remove 3D elements, optimize performance and improve PIL creation UX)
    ```

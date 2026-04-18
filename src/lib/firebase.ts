@@ -14,8 +14,11 @@ const firebaseConfig = {
 
 // Initialize Firebase only if API key is present
 let app;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let auth: any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let db: any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let storage: any;
 
 if (firebaseConfig.apiKey) {
