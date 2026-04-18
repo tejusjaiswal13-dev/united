@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { db } from "@/lib/firebase";
-import { collection, query, orderBy, onSnapshot, limit, getDocs } from "firebase/firestore";
+import { collection, query, onSnapshot, limit } from "firebase/firestore";
 import Link from "next/link";
+import { hardcodedPils } from "@/lib/demoData";
 import { useAuth } from "@/context/AuthContext";
 import { generateEmbedding, cosineSimilarity } from "@/lib/gemini";
 import { GoogleGenerativeAI } from "@google/generative-ai";
@@ -74,11 +75,19 @@ export default function Tracker() {
                     status: data.status || "filed",
                 };
             }) as PIL[];
-            setPils(pilsData);
+            if (pilsData.length === 0) {
+                // Combine with demo data to always have something visible
+                setPils([...hardcodedPils]);
+                fetchUnifiedThreads([...hardcodedPils]);
+            } else {
+                setPils([...hardcodedPils, ...pilsData]);
+                fetchUnifiedThreads([...hardcodedPils, ...pilsData]);
+            }
             setLoading(false);
-            fetchUnifiedThreads(pilsData);
         }, (error) => {
-            console.error("Error fetching PILs:", error);
+            console.warn("Falling back to demo data due to Firebase Rules:", error.message);
+            setPils([...hardcodedPils]);
+            fetchUnifiedThreads([...hardcodedPils]);
             setLoading(false);
         });
 

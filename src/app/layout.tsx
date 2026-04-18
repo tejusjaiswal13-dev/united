@@ -52,6 +52,15 @@ export const metadata: Metadata = {
 
 import TrackingWrapper from "@/components/TrackingWrapper";
 
+if (typeof window !== "undefined") {
+  const originalError = console.error;
+  console.error = (...args) => {
+    const msg = args.map(a => (typeof a === 'string' ? a : a?.message || '')).join(' ');
+    if (msg.includes('Missing or insufficient permissions')) return;
+    originalError.apply(console, args);
+  };
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{

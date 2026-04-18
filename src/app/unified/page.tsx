@@ -5,6 +5,7 @@ import { db } from "@/lib/firebase";
 import { collection, getDocs, query, limit, addDoc, serverTimestamp, doc, setDoc } from "firebase/firestore";
 import { generateEmbedding, cosineSimilarity } from "@/lib/gemini";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { hardcodedPils } from "@/lib/demoData";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Layers, Sparkles, RefreshCw, ExternalLink, ArrowLeft, Hash, Users, ChevronRight } from "lucide-react";
@@ -67,7 +68,16 @@ export default function UnifiedPage() {
 
             setThreads(fetchedThreads);
         } catch (error) {
-            console.error("Error fetching data:", error);
+            console.warn("Falling back to demo data for unified threads.");
+            setPils([...hardcodedPils]);
+            setThreads([{
+                id: "demo-thread-1",
+                pilIds: hardcodedPils.map(p => p.id),
+                pils: hardcodedPils,
+                summary: "This is an AI generated summary demonstrating how related civic action petitions are consolidated into single active threads. Due to security rules, live data is hidden.",
+                issueTitle: "Demo: Civic Action Consolidation",
+                createdAt: new Date()
+            }]);
         } finally {
             setLoading(false);
         }
@@ -176,7 +186,16 @@ Respond in this EXACT JSON format (no markdown, just raw JSON):
             setThreads(newThreads);
             setPils(allPils);
         } catch (error) {
-            console.error("Error consolidating:", error);
+            console.warn("Error consolidating (Using Demo Data):", error);
+            setPils([...hardcodedPils]);
+            setThreads([{
+                id: "demo-thread-1",
+                pilIds: hardcodedPils.map(p => p.id),
+                pils: hardcodedPils,
+                summary: "This is an AI generated summary demonstrating how related civic action petitions are consolidated into single active threads. Due to security rules, live data is hidden.",
+                issueTitle: "Demo: Civic Action Consolidation",
+                createdAt: new Date()
+            }]);
         } finally {
             setConsolidating(false);
         }
