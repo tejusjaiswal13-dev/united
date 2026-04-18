@@ -1,4 +1,6 @@
- (JanVichar) - Indian PIL Filing Portal
+# JanVichar - Indian PIL Filing Portal
+
+> 🎥 **Demo Video:** [Watch the JanVichar Platform Demo](https://drive.google.com/file/d/1_poVjUKEfVKIjkmOSJALMXBRKbQb6Iai/view?usp=drivesdk)
 
 JanVichar is a high-performance, AI-powered platform designed for Indian citizens to collaboratively draft, track, and manage Public Interest Litigations (PILs). It bridges the gap between civic grievances and judicial recourse through community engagement and advanced technology.
 
@@ -50,10 +52,6 @@ JanVichar is a high-performance, AI-powered platform designed for Indian citizen
 
 3. Set up environment variables:
    Create a `.env.local` file in the root directory:
-   ```env
-<<<<<<< HEAD
-  
-=======
    NEXT_PUBLIC_FIREBASE_API_KEY=...
    NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=...
    NEXT_PUBLIC_FIREBASE_PROJECT_ID=...
@@ -61,7 +59,6 @@ JanVichar is a high-performance, AI-powered platform designed for Indian citizen
    NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=...
    NEXT_PUBLIC_FIREBASE_APP_ID=... 
    NEXT_PUBLIC_GEMINI_API_KEY=...
->>>>>>> 4f891b4 (feat: remove 3D elements, optimize performance and improve PIL creation UX)
    ```
 
 4. Run the development server:
