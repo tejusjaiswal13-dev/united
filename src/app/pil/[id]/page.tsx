@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { db } from "@/lib/firebase";
 import { doc, getDoc, updateDoc, arrayUnion, increment } from "firebase/firestore";
 import { useAuth } from "@/context/AuthContext";
+import { hardcodedPils } from "@/lib/demoData";
 import jsPDF from "jspdf";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import {
@@ -89,6 +90,13 @@ export default function PILDetail() {
     useEffect(() => {
         const fetchPIL = async () => {
             if (!id) return;
+            const demoPil = hardcodedPils.find(p => p.id === id);
+            if (demoPil) {
+                setPil(getSafePIL({ ...demoPil, evidence: "" } as unknown as PIL));
+                setLoading(false);
+                return;
+            }
+
             try {
                 const docRef = doc(db, "pils", id as string);
                 const docSnap = await getDoc(docRef);
